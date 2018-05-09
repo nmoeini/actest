@@ -58,7 +58,7 @@ class NoteController extends Controller
             'note' => request('note')
         ]);
 
-        return Response::json(['message' => 'Note is created'],204);
+        return Response::json(['message' => "Note #{$note->id} is created"], 204);
     }
 
     /**
@@ -103,7 +103,7 @@ class NoteController extends Controller
 
         $note->update($validated);
 
-        Response::json(['message' => 'Note is updated'],204);
+        return Response::json(['message' => "Note #{$note->id} is updated"], 204);
     }
 
     /**
@@ -114,6 +114,10 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        $this->authorize('delete', $note);
+
+        $note->delete();
+
+        return Response::json(['message' => "Note #{$note->id} is deleted"], 204);
     }
 }
