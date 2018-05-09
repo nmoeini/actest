@@ -69,6 +69,8 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
+        $this->authorize('view', $note);
+
         return $note;
     }
 
