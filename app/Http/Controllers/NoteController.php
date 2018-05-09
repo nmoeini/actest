@@ -16,7 +16,7 @@ class NoteController extends Controller
     public function __construct()
     {
 
-        $this->middleware('auth');
+        $this->middleware('auth')->except('index');
     }
 
     /**
@@ -24,9 +24,9 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+
+        return Note::all();
     }
 
     /**

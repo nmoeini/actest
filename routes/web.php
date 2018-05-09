@@ -20,3 +20,7 @@ Route::post('/notes', 'NoteController@store');
 Route::get('/notes/{note}', 'NoteController@show');
 Route::patch('/notes/{note}', 'NoteController@update');
 Route::delete('/notes/{note}', 'NoteController@destroy');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
