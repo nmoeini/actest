@@ -105,5 +105,33 @@ class NoteTest extends TestCase
     }
 
 
+    /**
+    /* @test
+     */
+    public function it_accepts_json_to_update_note(){
+
+        $this->withoutExceptionHandling();
+
+        $this->signIn();
+
+        $note = factory('App\Note')->create(['user_id' => auth()->user()->id]);
+
+        $this->assertDatabaseHas('notes', ['title' => $note->title]);
+
+        $this->call(
+            'PATCH',
+            $note->path(),
+            [],
+            [],
+            [],
+            $headers = [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_ACCEPT' => 'application/json'
+            ],
+            json_encode(['title' => 'Changed Title'])
+        );
+
+        $this->assertDatabaseHas('notes', ['title' => 'Changed Title']);
+    }
 
 }
