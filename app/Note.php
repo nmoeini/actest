@@ -20,4 +20,14 @@ class Note extends Model
 
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    /**
+     * Prepares Note Path
+     *
+     * @return string
+     */
+    public function path() {
+
+        return "/notes/{$this->id}";
+    }
 }

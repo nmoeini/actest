@@ -67,5 +67,19 @@ class NoteTest extends TestCase
 
     }
 
+    /**
+    /* @test
+    */
+    public function an_authenticated_user_can_read_note(){
+
+        $this->signIn();
+
+        $note = factory('App\Note')->create();
+
+        $this->json('GET', $note->path())
+            ->assertStatus(200)
+            ->assertJson(['title' => $note->title]);
+
+    }
 
 }
