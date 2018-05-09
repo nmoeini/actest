@@ -4,7 +4,11 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Note::class, function (Faker $faker) {
     return [
-            'title' => $faker->text(40),
-            'note' => $faker->text(500)
+
+        'user_id'=>function(){
+            return factory('App\User')->create()->id;
+        },
+        'title' => $faker->text(40),
+        'note' => $faker->text(500)
     ];
 });

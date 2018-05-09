@@ -53,4 +53,19 @@ class NoteTest extends TestCase
 
         $this->assertDatabaseHas('notes', ['title' => $note->title]);
     }
+
+    /**
+     * @test
+     */
+    public function a_note_has_owner() {
+
+        $this->signIn();
+
+        $note = factory('App\Note')->create();
+
+        $this->assertInstanceOf('App\User', $note->creator);
+
+    }
+
+
 }
