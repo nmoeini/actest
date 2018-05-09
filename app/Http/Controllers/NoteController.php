@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class NoteController extends Controller
 {
+
+    /**
+     * NoteController constructor.
+     * Uses auth middleware to limit access for non logged in users.
+     */
+    public function __construct()
+    {
+
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +47,18 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'title' => 'required|max:50',
+            'note' => 'max:1000'
+        ]);
+
+        $note = Note::create([
+            'user_id' => auth()->id(),
+            'title' => request('title'),
+            'note' => request('note')
+        ]);
+
+        return Response::json(['message' => 'Note is created'],204);
     }
 
     /**

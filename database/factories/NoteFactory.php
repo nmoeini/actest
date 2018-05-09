@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Note::class, function (Faker $faker) {
     return [
-            'title' => $faker->sentence,
-            'note' => $faker->paragraph(10)
+            'title' => $faker->text(40),
+            'note' => $faker->text(500)
     ];
 });
