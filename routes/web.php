@@ -18,3 +18,4 @@ Route::get('/', function () {
 Route::get('/notes', 'NoteController@index');
 Route::post('/notes', 'NoteController@store');
 Route::get('/notes/{note}', 'NoteController@show');
+Route::patch('/notes/{note}', 'NoteController@update');

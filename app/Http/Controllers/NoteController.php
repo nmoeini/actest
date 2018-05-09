@@ -94,7 +94,16 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        //
+        $this->authorize('update', $note);
+
+        $validated = $this->validate(request(), [
+            'title' => 'max:50',
+            'note' => 'max:1000'
+        ]);
+
+        $note->update($validated);
+
+        Response::json(['message' => 'Note is updated'],204);
     }
 
     /**

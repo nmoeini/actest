@@ -84,6 +84,26 @@ class NoteTest extends TestCase
 
     }
 
+    /**
+    /* @test
+     */
+    public function an_authenticated_user_can_update_its_own_note(){
+
+        $this->withoutExceptionHandling();
+
+        $this->signIn();
+
+        $note = factory('App\Note')->create(['user_id' => auth()->user()->id]);
+
+        $this->assertDatabaseHas('notes', ['title' => $note->title]);
+
+        $this->json('PATCH', $note->path(), ['title' => 'New Title'])
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('notes', ['title' => 'New Title']);
+
+    }
+
 
 
 }
