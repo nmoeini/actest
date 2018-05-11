@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateNoteRequest;
+use App\Http\Requests\UpdateNoteRequest;
 use App\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -79,22 +80,14 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param UpdateNoteRequest $form
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function update(Request $request, Note $note)
+    public function update(UpdateNoteRequest $form)
     {
-        $this->authorize('update', $note);
+        $form->persist();
 
-        $validated = $this->validate(request(), [
-            'title' => 'max:50',
-            'note' => 'max:1000'
-        ]);
-
-        $note->update($validated);
-
-        return Response::json(['message' => "Note #{$note->id} is updated"], 204);
+        return Response::json(['message' => "Note is updated successfully"], 204);
     }
 
     /**
