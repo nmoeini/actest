@@ -28,6 +28,7 @@ class CreateNoteRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'title' => 'required|max:50',
             'note' => 'max:1000'

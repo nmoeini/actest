@@ -16,10 +16,12 @@ class Repository implements RepositoryInterface
 
     /**
      * Repository Constructor to bind model to repo
+     *
      * @param Model $model
      */
     public function __construct(Model $model)
     {
+
         $this->model = $model;
     }
 
@@ -30,6 +32,7 @@ class Repository implements RepositoryInterface
      */
     public function all()
     {
+
         return $this->model->all();
     }
 
@@ -41,6 +44,7 @@ class Repository implements RepositoryInterface
      */
     public function create(array $data)
     {
+
         return $this->model->create($data);
     }
 
@@ -53,7 +57,9 @@ class Repository implements RepositoryInterface
      */
     public function update(array $data, $id)
     {
+
         $record = $this->model->find($id);
+
         return $record->update($data);
     }
 
@@ -65,6 +71,7 @@ class Repository implements RepositoryInterface
      */
     public function delete($id)
     {
+
         return $this->model->destroy($id);
     }
 
@@ -76,6 +83,7 @@ class Repository implements RepositoryInterface
      */
     public function show($id)
     {
+
         return $this->model->findOrFail($id);
     }
 
@@ -86,6 +94,7 @@ class Repository implements RepositoryInterface
      */
     public function getModel()
     {
+
         return $this->model;
     }
 
@@ -97,7 +106,9 @@ class Repository implements RepositoryInterface
      */
     public function setModel($model)
     {
+
         $this->model = $model;
+
         return $this;
     }
 
@@ -109,6 +120,7 @@ class Repository implements RepositoryInterface
      */
     public function with($relations)
     {
+
         return $this->model->with($relations);
     }
 }

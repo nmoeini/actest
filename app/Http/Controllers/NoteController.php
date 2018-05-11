@@ -6,15 +6,20 @@ use App\Http\Requests\CreateNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Note;
 use App\Repositories\Repository;
+use App\Services\Service;
+
 
 class NoteController extends Controller
 {
 
     protected $model;
+    protected $service;
 
     /**
      * NoteController constructor.
      * Uses auth middleware to limit access for non logged in users.
+     *
+     * @param Note $note
      */
     public function __construct(Note $note)
     {
@@ -22,6 +27,8 @@ class NoteController extends Controller
         $this->middleware('auth.basic.once')->except('index');
 
         $this->model = New Repository($note);
+
+        $this->service = new Service($this->model);
     }
 
     /**
@@ -44,7 +51,7 @@ class NoteController extends Controller
     public function store(CreateNoteRequest $form)
     {
 
-        return $this->model->create(request()->only($this->model->getModel()->fillable));
+        return $this->service->create();
     }
 
     /**
@@ -56,21 +63,20 @@ class NoteController extends Controller
     public function show($id)
     {
 
-        return $this->model->show($id);
+        return $this->service->show($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param UpdateNoteRequest $form
+     * @param $id
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function update(UpdateNoteRequest $form, $id)
     {
 
-        $this->model->update(request()->only($this->model->getModel()->fillable), $id);
-
-        return $this->model->getModel()->find($id);
+        return $this->service->update($id);
 
     }
 
@@ -83,6 +89,6 @@ class NoteController extends Controller
     public function destroy($id)
     {
 
-        return $this->model->delete($id);
+        return $this->service->destroy($id);
     }
 }

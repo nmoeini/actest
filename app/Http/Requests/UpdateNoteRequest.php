@@ -11,6 +11,7 @@ class UpdateNoteRequest extends FormRequest
 {
 
     protected $note;
+
     /**
      * Determine if the user is authorized to make this request
      * By looking at NotePolicy class
@@ -35,7 +36,8 @@ class UpdateNoteRequest extends FormRequest
     public function failedAuthorization()
     {
 
-        throw new HttpResponseException(response()->json(['message' => 'You are not authorized to edit this Note.'], 429));
+        throw new HttpResponseException(response()->json(['message' => 'You are not authorized to edit this Note.'],
+            429));
 
     }
 
@@ -47,6 +49,7 @@ class UpdateNoteRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'title' => 'min:1|max:50',
             'note' => 'nullable|max:1000'

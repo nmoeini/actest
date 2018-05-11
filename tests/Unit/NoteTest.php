@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class NoteTest extends TestCase
 {
+
     use RefreshDatabase;
 
     /**
@@ -28,9 +29,10 @@ class NoteTest extends TestCase
     }
 
     /**
-    /* @test
-    */
-    public function it_can_accept_json_to_create_note(){
+     * /* @test
+     */
+    public function it_can_accept_json_to_create_note()
+    {
 
         $this->withoutExceptionHandling();
 
@@ -57,7 +59,8 @@ class NoteTest extends TestCase
     /**
      * @test
      */
-    public function a_note_has_owner() {
+    public function a_note_has_owner()
+    {
 
         $this->signIn();
 
@@ -68,9 +71,10 @@ class NoteTest extends TestCase
     }
 
     /**
-    /* @test
-    */
-    public function an_authenticated_user_can_read_its_own_note(){
+     * /* @test
+     */
+    public function an_authenticated_user_can_read_its_own_note()
+    {
 
         $this->withoutExceptionHandling();
 
@@ -85,9 +89,10 @@ class NoteTest extends TestCase
     }
 
     /**
-    /* @test
+     * /* @test
      */
-    public function an_authenticated_user_can_update_its_own_note(){
+    public function an_authenticated_user_can_update_its_own_note()
+    {
 
         $this->withoutExceptionHandling();
 
@@ -106,9 +111,10 @@ class NoteTest extends TestCase
 
 
     /**
-    /* @test
+     * /* @test
      */
-    public function it_accepts_json_to_update_note(){
+    public function it_accepts_json_to_update_note()
+    {
 
         $this->withoutExceptionHandling();
 
@@ -135,9 +141,10 @@ class NoteTest extends TestCase
     }
 
     /**
-    /* @test
+     * /* @test
      */
-    public function an_authenticated_user_can_delete_its_own_note(){
+    public function an_authenticated_user_can_delete_its_own_note()
+    {
 
         $this->withoutExceptionHandling();
 

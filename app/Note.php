@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
-    protected $guarded=[];
 
-    protected $with=['creator'];
+    protected $guarded = [];
+
+    protected $with = ['creator'];
 
     /**
      * A Note belongs to a User
@@ -16,7 +17,8 @@ class Note extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function creator() {
+    public function creator()
+    {
 
         return $this->belongsTo('App\User', 'user_id');
     }
@@ -26,7 +28,8 @@ class Note extends Model
      *
      * @return string
      */
-    public function path() {
+    public function path()
+    {
 
         return "/notes/{$this->id}";
     }
