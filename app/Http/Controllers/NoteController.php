@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateNoteRequest;
 use App\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -43,22 +44,12 @@ class NoteController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateNoteRequest $form)
     {
-        $this->validate(request(), [
-            'title' => 'required|max:50',
-            'note' => 'max:1000'
-        ]);
 
-        $note = Note::create([
-            'user_id' => auth()->id(),
-            'title' => request('title'),
-            'note' => request('note')
-        ]);
-
-        return Response::json(['message' => "Note #{$note->id} is created"], 204);
+        return $form->persist();
     }
 
     /**

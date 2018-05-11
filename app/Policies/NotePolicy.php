@@ -30,7 +30,8 @@ class NotePolicy
      */
     public function create(User $user)
     {
-        //
+        // Any authenticated user may be able to create Note
+        return true;
     }
 
     /**
