@@ -5,20 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Note;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use App\Repositories\Repository;
 
 class NoteController extends Controller
 {
+
+    protected $model;
 
     /**
      * NoteController constructor.
      * Uses auth middleware to limit access for non logged in users.
      */
-    public function __construct()
+    public function __construct(Note $note)
     {
 
         $this->middleware('auth.basic.once')->except('index');
+
+        $this->model = New Repository($note);
     }
 
     /**
@@ -26,55 +29,34 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-
-        return Note::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index()
     {
-        //
+
+        return $this->model->all();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Http\Response
      */
     public function store(CreateNoteRequest $form)
     {
 
-        return $form->persist();
+        return $this->model->create(request()->only($this->model->getModel()->fillable));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  $id
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function show(Note $note)
+    public function show($id)
     {
-        $this->authorize('view', $note);
 
-        return $note;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Note $note)
-    {
-        //
+        return $this->model->show($id);
     }
 
     /**
@@ -83,25 +65,24 @@ class NoteController extends Controller
      * @param UpdateNoteRequest $form
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function update(UpdateNoteRequest $form)
+    public function update(UpdateNoteRequest $form, $id)
     {
-        $form->persist();
 
-        return Response::json(['message' => "Note is updated successfully"], 204);
+        $this->model->update(request()->only($this->model->getModel()->fillable), $id);
+
+        return $this->model->getModel()->find($id);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return int
      */
-    public function destroy(Note $note)
+    public function destroy($id)
     {
-        $this->authorize('delete', $note);
 
-        $note->delete();
-
-        return Response::json(['message' => "Note #{$note->id} is deleted"], 204);
+        return $this->model->delete($id);
     }
 }

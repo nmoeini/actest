@@ -98,7 +98,7 @@ class NoteTest extends TestCase
         $this->assertDatabaseHas('notes', ['title' => $note->title]);
 
         $this->json('PATCH', $note->path(), ['title' => 'New Title'])
-            ->assertStatus(204);
+            ->assertStatus(200);
 
         $this->assertDatabaseHas('notes', ['title' => 'New Title']);
 
@@ -129,7 +129,7 @@ class NoteTest extends TestCase
                 'HTTP_ACCEPT' => 'application/json'
             ],
             json_encode(['title' => 'Changed Title'])
-        )->assertStatus(204);
+        )->assertStatus(200);
 
         $this->assertDatabaseHas('notes', ['title' => 'Changed Title']);
     }
@@ -148,7 +148,7 @@ class NoteTest extends TestCase
         $this->assertDatabaseHas('notes', ['title' => $note->title]);
 
         $this->json('DELETE', $note->path())
-            ->assertStatus(204);
+            ->assertStatus(200);
 
         $this->assertDatabaseMissing('notes', ['title' => $note->title]);
 

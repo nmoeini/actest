@@ -34,20 +34,4 @@ class CreateNoteRequest extends FormRequest
         ];
     }
 
-    /**
-     * Store request data in database
-     * and return Note object with creator
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function persist()
-    {
-
-        return Note::create([
-            'user_id' => auth()->id(),
-            'title' => request('title'),
-            'note' => request('note')
-        ])->load('creator');
-
-    }
 }
