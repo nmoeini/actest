@@ -37,7 +37,7 @@ Use the Client Secret to grant access to your application.
 Create a laravel project
 
 ```php
-composer create-project new-project
+composer create-project --prefer-dist laravel/laravel new-project
 
 cd new-project
 
